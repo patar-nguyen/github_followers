@@ -18,6 +18,7 @@
 		93F8779A29070FF300F04251 /* FavoritesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F8779929070FF300F04251 /* FavoritesListViewController.swift */; };
 		93F8779C2907526F00F04251 /* GHFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F8779B2907526F00F04251 /* GHFButton.swift */; };
 		93F8779E2907563F00F04251 /* GHFTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F8779D2907563F00F04251 /* GHFTextField.swift */; };
+		93F877A0290990E300F04251 /* FollowerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F8779F290990E300F04251 /* FollowerListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		93F8779929070FF300F04251 /* FavoritesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesListViewController.swift; sourceTree = "<group>"; };
 		93F8779B2907526F00F04251 /* GHFButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GHFButton.swift; sourceTree = "<group>"; };
 		93F8779D2907563F00F04251 /* GHFTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GHFTextField.swift; sourceTree = "<group>"; };
+		93F8779F290990E300F04251 /* FollowerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				93F8779729070F5D00F04251 /* SearchViewController.swift */,
 				93F8779929070FF300F04251 /* FavoritesListViewController.swift */,
 				93F8779D2907563F00F04251 /* GHFTextField.swift */,
+				93F8779F290990E300F04251 /* FollowerListViewController.swift */,
 				93F877702906FCC400F04251 /* Assets.xcassets */,
 				93F877722906FCC400F04251 /* LaunchScreen.storyboard */,
 				93F877752906FCC400F04251 /* Info.plist */,
@@ -266,6 +269,7 @@
 				93F8779829070F5D00F04251 /* SearchViewController.swift in Sources */,
 				93F877682906FCC300F04251 /* AppDelegate.swift in Sources */,
 				93F8779A29070FF300F04251 /* FavoritesListViewController.swift in Sources */,
+				93F877A0290990E300F04251 /* FollowerListViewController.swift in Sources */,
 				93F8779C2907526F00F04251 /* GHFButton.swift in Sources */,
 				93F8776A2906FCC300F04251 /* SceneDelegate.swift in Sources */,
 				93F8779E2907563F00F04251 /* GHFTextField.swift in Sources */,
