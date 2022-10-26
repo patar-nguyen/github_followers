@@ -39,7 +39,7 @@ class SearchViewController: UIViewController {
     //pass data to next screen
     @objc func pushFollowerListViewController() {
         guard isUsernameEntered else {
-            print("No username")
+            presentGHFAlertOnMainThread(title: "Empty Username", message: "Please enter a username.", buttonTitle: "Ok")
             return
         }
         
