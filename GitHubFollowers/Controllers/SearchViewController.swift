@@ -13,6 +13,7 @@ class SearchViewController: UIViewController {
     let usernameTextField = GHFTextField()
     let callToActionButton = GHFButton(backgroundColor: .systemGreen, title: "Get Followers")
     
+    //computed property
     var isUsernameEntered: Bool {
         return !usernameTextField.text!.isEmpty
     }
@@ -28,7 +29,8 @@ class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
+        //navigationController?.isNavigationBarHidden = true
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     func createDismissKeyboardTapGesture() {
