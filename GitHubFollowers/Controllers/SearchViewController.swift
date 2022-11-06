@@ -93,7 +93,6 @@ class SearchViewController: UIViewController {
 //when return key is tapped, this function runs
 extension SearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("Did Tap Return")
         pushFollowerListViewController()
         return true
     }
