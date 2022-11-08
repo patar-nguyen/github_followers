@@ -126,7 +126,13 @@ extension FollowerListViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let follower = followers[indexPath.item]
+        let activeArray = isSearching ? filteredFollowers : followers
+        let follower = activeArray[indexPath.item]
+        
+        let destinationViewController = UserInfoViewController()
+        destinationViewController.username = follower.login
+        let navigationController = UINavigationController(rootViewController: destinationViewController)
+        present(navigationController, animated: true)
     }
 }
 

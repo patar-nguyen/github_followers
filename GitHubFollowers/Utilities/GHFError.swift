@@ -1,8 +1,8 @@
 //
-//  ErrorMessage.swift
+//  GHFError.swift
 //  GitHubFollowers
 //
-//  Created by Patrick Nguyen on 2022-10-31.
+//  Created by Patrick Nguyen on 2022-11-06.
 //
 
 import Foundation
