@@ -27,6 +27,7 @@
 		93641001290B1D7F00CE08C4 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93641000290B1D7F00CE08C4 /* Follower.swift */; };
 		93641003290B1F3100CE08C4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93641002290B1F3100CE08C4 /* User.swift */; };
 		93641006290B3ADE00CE08C4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93641005290B3ADE00CE08C4 /* NetworkManager.swift */; };
+		93D1E9E829243D46007B3290 /* GHFTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D1E9E729243D46007B3290 /* GHFTabBarController.swift */; };
 		93F877682906FCC300F04251 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F877672906FCC300F04251 /* AppDelegate.swift */; };
 		93F8776A2906FCC300F04251 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F877692906FCC300F04251 /* SceneDelegate.swift */; };
 		93F877712906FCC400F04251 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93F877702906FCC400F04251 /* Assets.xcassets */; };
@@ -83,6 +84,7 @@
 		93641000290B1D7F00CE08C4 /* Follower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		93641002290B1F3100CE08C4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		93641005290B3ADE00CE08C4 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		93D1E9E729243D46007B3290 /* GHFTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GHFTabBarController.swift; sourceTree = "<group>"; };
 		93F877642906FCC300F04251 /* GitHubFollowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubFollowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93F877672906FCC300F04251 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93F877692906FCC300F04251 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -230,6 +232,14 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		93D1E9E429243BF9007B3290 /* TabBarControllers */ = {
+			isa = PBXGroup;
+			children = (
+				93D1E9E729243D46007B3290 /* GHFTabBarController.swift */,
+			);
+			path = TabBarControllers;
+			sourceTree = "<group>";
+		};
 		93F8775B2906FCC300F04251 = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +306,7 @@
 		93F877AA2909B0A600F04251 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				93D1E9E429243BF9007B3290 /* TabBarControllers */,
 				934CBAAB291AF28900F88FA2 /* View */,
 				934CBA9E29172B9400F88FA2 /* ViewControllers */,
 				934CBA9D29172B8500F88FA2 /* Buttons */,
@@ -483,6 +494,7 @@
 				934CBABC29200D6000F88FA2 /* PersistenceManager.swift in Sources */,
 				93641006290B3ADE00CE08C4 /* NetworkManager.swift in Sources */,
 				93F877A629099F7400F04251 /* GHFAlertViewController.swift in Sources */,
+				93D1E9E829243D46007B3290 /* GHFTabBarController.swift in Sources */,
 				934CBAAD291AF2A700F88FA2 /* GHFItemInfoView.swift in Sources */,
 				934CBAA82919E0D200F88FA2 /* GHFSecondaryTitleLabel.swift in Sources */,
 				934CBAA2291829DB00F88FA2 /* UserInfoViewController.swift in Sources */,

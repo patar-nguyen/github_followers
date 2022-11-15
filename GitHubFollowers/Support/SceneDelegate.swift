@@ -25,36 +25,37 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = createTabBar() //tabBar
+        window?.rootViewController = GHFTabBarController() //tabBar
         window?.makeKeyAndVisible()
         
         configureNavigationBar()
         
     }
 
-    func createSearchNavigationController() -> UINavigationController {
-        let searchViewController = SearchViewController()
-        searchViewController.title = "Search"
-        searchViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
-        
-        return UINavigationController(rootViewController: searchViewController)
-    }
-    
-    func createFavoritesNavigationController() -> UINavigationController {
-        let favoritesListViewController = FavoritesListViewController()
-        favoritesListViewController.title = "Favorites"
-        favoritesListViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
-        
-        return UINavigationController(rootViewController: favoritesListViewController)
-    }
-    
-    func createTabBar() -> UITabBarController {
-        let tabBar = UITabBarController()
-        UITabBar.appearance().tintColor = .systemGreen
-        tabBar.viewControllers = [createSearchNavigationController(), createFavoritesNavigationController()]
-        
-        return tabBar
-    }
+    //REFACTORED AND MOVED TO GHFTABBARCONTROLLER FILE
+//    func createSearchNavigationController() -> UINavigationController {
+//        let searchViewController = SearchViewController()
+//        searchViewController.title = "Search"
+//        searchViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
+//
+//        return UINavigationController(rootViewController: searchViewController)
+//    }
+//
+//    func createFavoritesNavigationController() -> UINavigationController {
+//        let favoritesListViewController = FavoritesListViewController()
+//        favoritesListViewController.title = "Favorites"
+//        favoritesListViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+//
+//        return UINavigationController(rootViewController: favoritesListViewController)
+//    }
+//
+//    func createTabBar() -> UITabBarController {
+//        let tabBar = UITabBarController()
+//        UITabBar.appearance().tintColor = .systemGreen
+//        tabBar.viewControllers = [createSearchNavigationController(), createFavoritesNavigationController()]
+//
+//        return tabBar
+//    }
     
     func configureNavigationBar() {
         UINavigationBar.appearance().tintColor = .systemGreen
