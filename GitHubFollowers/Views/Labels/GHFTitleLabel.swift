@@ -8,7 +8,7 @@
 import UIKit
 
 class GHFTitleLabel: UILabel {
-    
+    //designated initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -18,11 +18,13 @@ class GHFTitleLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(textAlighment: NSTextAlignment, fontSize: CGFloat) {
-        super.init(frame: .zero)
+    convenience init(textAlighment: NSTextAlignment, fontSize: CGFloat) {
+        //super.init(frame: .zero)
+        //when using convenience initializer, must use self and not have to call configure
+        self.init(frame: .zero)
         self.textAlignment = textAlighment
         self.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
-        configure()
+        //configure()
     }
     
     private func configure() {

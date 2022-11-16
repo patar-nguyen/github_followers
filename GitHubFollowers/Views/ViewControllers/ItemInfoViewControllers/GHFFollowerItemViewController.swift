@@ -7,7 +7,24 @@
 
 import UIKit
 
+protocol GHFFollowerViewControllerDelegate: class {
+    func didTapGetFollowers(for user: User)
+}
+
 class GHFFollowerItemViewController: GHFItemInfoViewController {
+    
+    weak var delegate: GHFFollowerViewControllerDelegate!
+    
+    init(user: User, delegate: GHFFollowerViewControllerDelegate) {
+        super.init(user: user)
+        self.delegate = delegate
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureItems()

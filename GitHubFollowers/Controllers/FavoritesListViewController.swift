@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavoritesListViewController: UIViewController {
+class FavoritesListViewController: GHFDataLoadingViewController {
     
     let tableView = UITableView()
     var favorites: [Follower] = []
@@ -37,28 +37,33 @@ class FavoritesListViewController: UIViewController {
         tableView.rowHeight = 80
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.removeExcessCells()
         
         tableView.register(FavoritesTableViewCell.self, forCellReuseIdentifier: FavoritesTableViewCell.reuseID)
     }
     
     func getFavorites() {
-        PersistenceManger.retrieveFavorites { [weak self] result in
+        PersistenceManager.retrieveFavorites { [weak self] result in
             guard let self = self else { return }
             
             switch result {
             case .success(let favorites):
-                if favorites .isEmpty {
-                    self.showEmptyStateView(with: "No favorites?\nAdd one on the follower screen", in: self.view)
-                } else {
-                    self.favorites = favorites
-                    //reload tableview on main thread
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                        self.view.bringSubviewToFront(self.tableView)
-                    }
-                }
+                self.updateUI(with: favorites)
             case .failure(let error):
                 self.presentGHFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
+            }
+        }
+    }
+    
+    func updateUI(with favorites: [Follower]) {
+        if favorites .isEmpty {
+            self.showEmptyStateView(with: "No favorites?\nAdd one on the follower screen", in: self.view)
+        } else {
+            self.favorites = favorites
+            //reload tableview on main thread
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.view.bringSubviewToFront(self.tableView)
             }
         }
     }
@@ -90,12 +95,14 @@ extension FavoritesListViewController: UITableViewDataSource, UITableViewDelegat
         guard editingStyle == .delete else { return }
         
         let favorite = favorites[indexPath.row]
-        favorites.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .left)
         
-        PersistenceManger.updateWith(favorite: favorite, actionType: .remove) { [weak self] error in
+        PersistenceManager.updateWith(favorite: favorite, actionType: .remove) { [weak self] error in
             guard let self = self else { return }
-            guard let error = error else { return }
+            guard let error = error else {
+                self.favorites.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .left)
+                return
+            }
             self.presentGHFAlertOnMainThread(title: "Unable to remove", message: error.rawValue, buttonTitle: "Ok")
         }
     }

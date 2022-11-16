@@ -18,15 +18,17 @@ class GHFBodyLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(textAlighment: NSTextAlignment) {
-        super.init(frame: .zero)
+    convenience init(textAlighment: NSTextAlignment) {
+        //super.init(frame: .zero)
+        self.init(frame: .zero)
         self.textAlignment = textAlighment
-        configure()
+        //configure()
     }
     
     private func configure() {
         textColor = .secondaryLabel
         font = UIFont.preferredFont(forTextStyle: .body)
+        adjustsFontForContentSizeCategory = true
         adjustsFontSizeToFitWidth = true
         minimumScaleFactor = 0.75
         lineBreakMode = .byWordWrapping

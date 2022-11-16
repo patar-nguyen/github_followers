@@ -7,13 +7,20 @@
 
 import UIKit
 
+//protocol UserInfoViewControllerDelegate: class {
+//    func didTapGitHubProfile(for user: User)
+//    func didTapGetFollowers(for user: User)
+//}
+
 protocol UserInfoViewControllerDelegate: class {
-    func didTapGitHubProfile(for user: User)
-    func didTapGetFollowers(for user: User)
+    func didRequestFollowers(for username: String)
 }
 
-class UserInfoViewController: UIViewController {
+class UserInfoViewController: GHFDataLoadingViewController { //changed from UIViewController {
 
+    let scrollView = UIScrollView()
+    let contentView = UIView()
+    
     let headerView = UIView()
     let itemViewOne = UIView()
     let itemViewTwo = UIView()
@@ -22,11 +29,12 @@ class UserInfoViewController: UIViewController {
     
     var username: String!
     
-    weak var delegate: FollowerListViewControllerDelegate!
+    weak var delegate: UserInfoViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
+        configureScrollView()
         layoutUI()
         getUserInfo()
     }
@@ -35,6 +43,18 @@ class UserInfoViewController: UIViewController {
         view.backgroundColor = .systemBackground
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissViewController))
         navigationItem.rightBarButtonItem = doneButton
+    }
+    
+    func configureScrollView() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        scrollView.pinToEdges(of: view)
+        contentView.pinToEdges(of: scrollView)
+
+        NSLayoutConstraint.activate([
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            contentView.heightAnchor.constraint(equalToConstant: 600)
+        ])
     }
     
     func getUserInfo() {
@@ -54,16 +74,16 @@ class UserInfoViewController: UIViewController {
     }
     
     func configureUIElements(with user: User) {
-        let repoItemViewController = GHFRepoItemViewController(user: user)
-        repoItemViewController.delegate = self
+        //let repoItemViewController = GHFRepoItemViewController(user: user, delegate: self)
+        //repoItemViewController.delegate = self
         
-        let followerItemViewController = GHFFollowerItemViewController(user: user)
-        followerItemViewController.delegate = self
+//        let followerItemViewController = GHFFollowerItemViewController(user: user)
+//        followerItemViewController.delegate = self
         
         self.add(childViewController: GHFUserInfoHeaderViewController(user: user), to: self.headerView)
-        self.add(childViewController: repoItemViewController, to: self.itemViewOne)
-        self.add(childViewController: followerItemViewController, to: self.itemViewTwo)
-        self.dateLabel.text = "GitHub since \(user.createdAt.convertToDisplayFormat())"
+        self.add(childViewController: GHFRepoItemViewController(user: user, delegate: self), to: self.itemViewOne)
+        self.add(childViewController: GHFFollowerItemViewController(user: user, delegate: self), to: self.itemViewTwo)
+        self.dateLabel.text = "GitHub since \(user.createdAt.convertToMonthYearFormat())"//convertToDisplayFormat())"
     }
     
     func layoutUI() {
@@ -72,12 +92,12 @@ class UserInfoViewController: UIViewController {
         itemViews = [headerView, itemViewOne, itemViewTwo, dateLabel]
         
         for itemView in itemViews {
-            view.addSubview(itemView)
+            contentView.addSubview(itemView)
             itemView.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint.activate([
-                itemView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-                itemView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+                itemView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+                itemView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             ])
         }
 //        view.addSubview(headerView)
@@ -89,10 +109,10 @@ class UserInfoViewController: UIViewController {
 //        itemViewTwo.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
             //headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             //headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-            headerView.heightAnchor.constraint(equalToConstant: 180),
+            headerView.heightAnchor.constraint(equalToConstant: 210),
             
             itemViewOne.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding),
             //itemViewOne.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
@@ -105,7 +125,7 @@ class UserInfoViewController: UIViewController {
             itemViewTwo.heightAnchor.constraint(equalToConstant: itemHeight),
             
             dateLabel.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: padding),
-            dateLabel.heightAnchor.constraint(equalToConstant: 18)
+            dateLabel.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -121,7 +141,7 @@ class UserInfoViewController: UIViewController {
     }
 }
 
-extension UserInfoViewController: UserInfoViewControllerDelegate {
+extension UserInfoViewController: GHFRepoItemViewControllerDelegate {
     func didTapGitHubProfile(for user: User) {
         guard let url = URL(string: user.htmlUrl) else {
             presentGHFAlertOnMainThread(title: "Invalid URL", message: "The URL attached to this user is invalid.", buttonTitle: "Ok")
@@ -129,7 +149,9 @@ extension UserInfoViewController: UserInfoViewControllerDelegate {
         }
         presentSafariViewController(with: url)
     }
-    
+}
+
+extension UserInfoViewController: GHFFollowerViewControllerDelegate {
     func didTapGetFollowers(for user: User) {
         guard user.followers != 0 else {
             presentGHFAlertOnMainThread(title: "No followers", message: "This user has no followers.", buttonTitle: "Ok")
@@ -138,7 +160,23 @@ extension UserInfoViewController: UserInfoViewControllerDelegate {
         delegate.didRequestFollowers(for: user.login)
         dismissViewController()
     }
-    
-
-    
 }
+
+//extension UserInfoViewController: ItemInfoViewControllerDelegate {
+//    func didTapGitHubProfile(for user: User) {
+//        guard let url = URL(string: user.htmlUrl) else {
+//            presentGHFAlertOnMainThread(title: "Invalid URL", message: "The URL attached to this user is invalid.", buttonTitle: "Ok")
+//            return
+//        }
+//        presentSafariViewController(with: url)
+//    }
+//
+//    func didTapGetFollowers(for user: User) {
+//        guard user.followers != 0 else {
+//            presentGHFAlertOnMainThread(title: "No followers", message: "This user has no followers.", buttonTitle: "Ok")
+//            return
+//        }
+//        delegate.didRequestFollowers(for: user.login)
+//        dismissViewController()
+//    }
+//}
