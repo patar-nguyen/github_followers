@@ -9,14 +9,28 @@ import UIKit
 import SafariServices
 
 extension UIViewController {
+    //old way when using network call
+//    func presentGHFAlertOnMainThread(title: String, message: String, buttonTitle: String) {
+//        DispatchQueue.main.async {
+//            let alertViewController = GHFAlertViewController(title: title, message: message, buttonTitle: buttonTitle)
+//            alertViewController.modalPresentationStyle = .overFullScreen
+//            alertViewController.modalTransitionStyle = .crossDissolve
+//            self.present(alertViewController, animated: true)
+//        }
+//    }
     
-    func presentGHFAlertOnMainThread(title: String, message: String, buttonTitle: String) {
-        DispatchQueue.main.async {
+    func presentGHFAlert(title: String, message: String, buttonTitle: String) {
             let alertViewController = GHFAlertViewController(title: title, message: message, buttonTitle: buttonTitle)
             alertViewController.modalPresentationStyle = .overFullScreen
             alertViewController.modalTransitionStyle = .crossDissolve
-            self.present(alertViewController, animated: true)
-        }
+            present(alertViewController, animated: true)
+    }
+    
+    func presentDefaultError() {
+            let alertViewController = GHFAlertViewController(title: "Something went wrong.", message: "Unable to complete task. Please try again.", buttonTitle: "Ok")
+            alertViewController.modalPresentationStyle = .overFullScreen
+            alertViewController.modalTransitionStyle = .crossDissolve
+            present(alertViewController, animated: true)
     }
     
     func presentSafariViewController(with url: URL) {

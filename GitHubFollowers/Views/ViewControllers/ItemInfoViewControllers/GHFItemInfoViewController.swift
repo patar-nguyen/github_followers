@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ItemInfoViewControllerDelegate: class {
+protocol ItemInfoViewControllerDelegate: AnyObject {
     func didTapGitHubProfile(for user: User)
     func didTapGetFollowers(for user: User)
 }

@@ -12,7 +12,7 @@ import UIKit
 //    func didTapGetFollowers(for user: User)
 //}
 
-protocol UserInfoViewControllerDelegate: class {
+protocol UserInfoViewControllerDelegate: AnyObject {
     func didRequestFollowers(for username: String)
 }
 
@@ -57,18 +57,33 @@ class UserInfoViewController: GHFDataLoadingViewController { //changed from UIVi
         ])
     }
     
+//    func getUserInfo() {
+//        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
+//            guard let self = self else { return }
+//
+//            switch result {
+//            case .success(let user):
+//                DispatchQueue.main.async {
+//                    self.configureUIElements(with: user)
+//                }
+//
+//            case .failure(let error):
+//                self.presentGHFAlertOnMainThread(title: "Error", message: error.rawValue, buttonTitle: "Ok")
+//            }
+//        }
+//    }
+    
     func getUserInfo() {
-        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let user):
-                DispatchQueue.main.async {
-                    self.configureUIElements(with: user)
+        Task {
+            do {
+                let user = try await NetworkManager.shared.getUserInfo(for: username)
+                configureUIElements(with: user)
+            } catch {
+                if let ghfError = error as? GHFError {
+                    presentGHFAlert(title: "Something went wrong", message: ghfError.rawValue, buttonTitle: "Ok")
+                } else {
+                    presentDefaultError()
                 }
-                
-            case .failure(let error):
-                self.presentGHFAlertOnMainThread(title: "Error", message: error.rawValue, buttonTitle: "Ok")
             }
         }
     }
@@ -144,7 +159,7 @@ class UserInfoViewController: GHFDataLoadingViewController { //changed from UIVi
 extension UserInfoViewController: GHFRepoItemViewControllerDelegate {
     func didTapGitHubProfile(for user: User) {
         guard let url = URL(string: user.htmlUrl) else {
-            presentGHFAlertOnMainThread(title: "Invalid URL", message: "The URL attached to this user is invalid.", buttonTitle: "Ok")
+            presentGHFAlert(title: "Invalid URL", message: "The URL attached to this user is invalid.", buttonTitle: "Ok")
             return
         }
         presentSafariViewController(with: url)
@@ -154,7 +169,7 @@ extension UserInfoViewController: GHFRepoItemViewControllerDelegate {
 extension UserInfoViewController: GHFFollowerViewControllerDelegate {
     func didTapGetFollowers(for user: User) {
         guard user.followers != 0 else {
-            presentGHFAlertOnMainThread(title: "No followers", message: "This user has no followers.", buttonTitle: "Ok")
+            presentGHFAlert(title: "No followers", message: "This user has no followers.", buttonTitle: "Ok")
             return
         }
         delegate.didRequestFollowers(for: user.login)

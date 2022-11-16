@@ -85,19 +85,47 @@ class FollowerListViewController: GHFDataLoadingViewController {
         showLoadingView()
         isLoadingMoreFollowers = true
         
-        NetworkManager.shared.getFollowers(for: username, page: page) { /*(followers, errorMessage)*/ [weak self] result in
-            guard let self = self else { return }
-            self.dismissLoadingView()
-
-            switch result {
-            case .success(let followers):
-                self.updateUI(with: followers)
-            case .failure(let error):
-                self.presentGHFAlertOnMainThread(title: "Bad Stuff Happened", message: error.rawValue, buttonTitle: "ok")
-
+        Task {
+            do {
+                let followers = try await NetworkManager.shared.getFollowers(for: username, page: page)
+                updateUI(with: followers)
+                dismissLoadingView()
+                isLoadingMoreFollowers = false
+            } catch {
+                if let ghfError = error as? GHFError {
+                    presentGHFAlert(title: "Bad Stuff Happened", message: ghfError.rawValue, buttonTitle: "ok")
+                } else {
+                    presentDefaultError()
+                }
+                isLoadingMoreFollowers = false
+                dismissLoadingView()
             }
-            self.isLoadingMoreFollowers = false
+            
+            //simplified version if don't care about specific error
+//            guard let followers = try? await NetworkManager.shared.getFollowers(for: username, page: page) else {
+//                presentDefaultError()
+//                dismissLoadingView()
+//                return
+//            }
+//
+//            updateUI(with: followers)
+//            dismissLoadingView()
+            
         }
+        //old way using completion handler
+//        NetworkManager.shared.getFollowers(for: username, page: page) { /*(followers, errorMessage)*/ [weak self] result in
+//            guard let self = self else { return }
+//            self.dismissLoadingView()
+//
+//            switch result {
+//            case .success(let followers):
+//                self.updateUI(with: followers)
+//            case .failure(let error):
+//                self.presentGHFAlertOnMainThread(title: "Bad Stuff Happened", message: error.rawValue, buttonTitle: "ok")
+//
+//            }
+//            self.isLoadingMoreFollowers = false
+//        }
     }
     
     func updateUI(with followers: [Follower]) {
@@ -130,19 +158,38 @@ class FollowerListViewController: GHFDataLoadingViewController {
         }
     }
     
+//    @objc func addButtonTapped() {
+//        showLoadingView()
+//
+//        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
+//            guard let self = self else { return }
+//            self.dismissLoadingView()
+//
+//            switch result {
+//            case .success(let user):
+//                self.addUserToFavorites(user: user)
+//
+//            case .failure(let error):
+//                self.presentGHFAlert(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
+//            }
+//        }
+//    }
+    
     @objc func addButtonTapped() {
         showLoadingView()
         
-        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
-            guard let self = self else { return }
-            self.dismissLoadingView()
-            
-            switch result {
-            case .success(let user):
-                self.addUserToFavorites(user: user)
-                
-            case .failure(let error):
-                self.presentGHFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
+        Task {
+            do {
+                let user = try await NetworkManager.shared.getUserInfo(for: username)
+                addUserToFavorites(user: user)
+                dismissLoadingView()
+            } catch {
+                if let ghfError = error as? GHFError {
+                    presentGHFAlert(title: "Something went wrong", message: ghfError.rawValue, buttonTitle: "Ok")
+                } else {
+                    presentDefaultError()
+                }
+                dismissLoadingView()
             }
         }
     }
@@ -152,11 +199,17 @@ class FollowerListViewController: GHFDataLoadingViewController {
         
         PersistenceManager.updateWith(favorite: favorite, actionType: .add) { [weak self] error in
             guard let self = self else { return }
+            
             guard let error = error else {
-                self.presentGHFAlertOnMainThread(title: "Success", message: "You have successfully favorited this user", buttonTitle: "Ok")
+                DispatchQueue.main.async {
+                    self.presentGHFAlert(title: "Success", message: "You have successfully favorited this user", buttonTitle: "Ok")
+                }
                 return
             }
-            self.presentGHFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
+            
+            DispatchQueue.main.async {
+                self.presentGHFAlert(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
+            }
         }
     }
 }
