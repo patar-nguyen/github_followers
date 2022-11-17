@@ -1,4 +1,7 @@
 # GitHub Followers
+Application developed from Sean Allen's Take Home Project course where a GitHub user can be searched and the user's followers will be
+displayed. Users can be added to a favorites list and clicking on a user will display information about their followers, followings, public gists,
+and public repos. 
 
 ## Dependencies
 - Swift
