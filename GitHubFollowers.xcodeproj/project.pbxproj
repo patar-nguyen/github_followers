@@ -32,6 +32,10 @@
 		93D1E9EC29245E7B007B3290 /* GHFDataLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D1E9EB29245E7B007B3290 /* GHFDataLoadingViewController.swift */; };
 		93D1E9EE29248C51007B3290 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D1E9ED29248C51007B3290 /* UIView+Ext.swift */; };
 		93D1E9F029254484007B3290 /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D1E9EF29254484007B3290 /* UITableView+Ext.swift */; };
+		93D1E9F7292686B0007B3290 /* Followers.png in Resources */ = {isa = PBXBuildFile; fileRef = 93D1E9F3292686B0007B3290 /* Followers.png */; };
+		93D1E9F8292686B0007B3290 /* Favorites.png in Resources */ = {isa = PBXBuildFile; fileRef = 93D1E9F4292686B0007B3290 /* Favorites.png */; };
+		93D1E9F9292686B0007B3290 /* Profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 93D1E9F5292686B0007B3290 /* Profile.png */; };
+		93D1E9FA292686B0007B3290 /* Search.png in Resources */ = {isa = PBXBuildFile; fileRef = 93D1E9F6292686B0007B3290 /* Search.png */; };
 		93F877682906FCC300F04251 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F877672906FCC300F04251 /* AppDelegate.swift */; };
 		93F8776A2906FCC300F04251 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F877692906FCC300F04251 /* SceneDelegate.swift */; };
 		93F877712906FCC400F04251 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93F877702906FCC400F04251 /* Assets.xcassets */; };
@@ -93,6 +97,11 @@
 		93D1E9EB29245E7B007B3290 /* GHFDataLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GHFDataLoadingViewController.swift; sourceTree = "<group>"; };
 		93D1E9ED29248C51007B3290 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		93D1E9EF29254484007B3290 /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
+		93D1E9F129268655007B3290 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		93D1E9F3292686B0007B3290 /* Followers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Followers.png; sourceTree = "<group>"; };
+		93D1E9F4292686B0007B3290 /* Favorites.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Favorites.png; sourceTree = "<group>"; };
+		93D1E9F5292686B0007B3290 /* Profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Profile.png; sourceTree = "<group>"; };
+		93D1E9F6292686B0007B3290 /* Search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Search.png; sourceTree = "<group>"; };
 		93F877642906FCC300F04251 /* GitHubFollowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubFollowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93F877672906FCC300F04251 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93F877692906FCC300F04251 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -250,9 +259,21 @@
 			path = TabBarControllers;
 			sourceTree = "<group>";
 		};
+		93D1E9F22926867E007B3290 /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				93D1E9F4292686B0007B3290 /* Favorites.png */,
+				93D1E9F3292686B0007B3290 /* Followers.png */,
+				93D1E9F5292686B0007B3290 /* Profile.png */,
+				93D1E9F6292686B0007B3290 /* Search.png */,
+			);
+			path = Screenshots;
+			sourceTree = "<group>";
+		};
 		93F8775B2906FCC300F04251 = {
 			isa = PBXGroup;
 			children = (
+				93D1E9F129268655007B3290 /* README.md */,
 				93F877662906FCC300F04251 /* GitHubFollowers */,
 				93F8777D2906FCC400F04251 /* GitHubFollowersTests */,
 				93F877872906FCC400F04251 /* GitHubFollowersUITests */,
@@ -273,6 +294,7 @@
 		93F877662906FCC300F04251 /* GitHubFollowers */ = {
 			isa = PBXGroup;
 			children = (
+				93D1E9F22926867E007B3290 /* Screenshots */,
 				934CBA902910521500F88FA2 /* Utilities */,
 				93641004290B3AD100CE08C4 /* Managers */,
 				93640FFF290B1D5F00CE08C4 /* Models */,
@@ -456,7 +478,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				93F877742906FCC400F04251 /* LaunchScreen.storyboard in Resources */,
+				93D1E9FA292686B0007B3290 /* Search.png in Resources */,
 				93F877712906FCC400F04251 /* Assets.xcassets in Resources */,
+				93D1E9F7292686B0007B3290 /* Followers.png in Resources */,
+				93D1E9F8292686B0007B3290 /* Favorites.png in Resources */,
+				93D1E9F9292686B0007B3290 /* Profile.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
